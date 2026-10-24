@@ -307,6 +307,15 @@
       display: block
     }
 
+    .photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
     .portrait {
       aspect-ratio: 4/5;
       border: 4px solid var(--white);
@@ -1041,7 +1050,7 @@
         <a href="#about">About</a><a href="#map">Projects</a><a href="#side">Side projects</a><a
           href="#contact">Contact</a>
         <span id="count">0/3 unlocked</span>
-        <button class="mini" id="skip" type="button">Skip games</button>
+        
       </nav>
     </div>
     <div id="xp"></div>
@@ -1055,10 +1064,10 @@
         <h1>Parham Motaharimajd</h1>
         <p>Lead designer of Weigh Out, heading to Steam. Play mini-games to unlock my projects.</p>
         <a class="btn" href="#map">Press start</a>
-        <a class="btn alt" href="#">Download CV</a>
+        <a class="btn alt" href="Parham_Motaharimajd_Game_Designer_CV.pdf">Download CV</a>
       </div>
-      <figure class="photo portrait"><img src="images/portrait.jpg" alt="Portrait of Parham Motaharimajd"
-          onerror="this.remove()"></figure>
+      <figure class="photo portrait"><img src="First.JPG" alt="Portrait of Parham Motaharimajd" onerror="this.remove()">
+      </figure>
     </div>
   </section>
 
@@ -1066,7 +1075,7 @@
     <section id="about" aria-labelledby="about-h">
       <h2 id="about-h">About me</h2>
       <div class="player abt">
-        <figure class="photo"><img src="images/about.jpg" alt="Parham Motaharimajd at work" onerror="this.remove()">
+        <figure class="photo"><img src="Profile.jpg" alt="Parham Motaharimajd at work" onerror="this.remove()">
         </figure>
         <div>
           <h3>Parham Motaharimajd</h3>
@@ -1081,9 +1090,8 @@
     </section>
     <section id="map" aria-labelledby="map-h">
       <h2 id="map-h">Projects</h2>
-      <p class="sub">Beat a mini-game to unlock each project. Short on time? <button class="link" id="skip2"
-          type="button">Unlock everything</button> or <button class="link" id="reset2" type="button">lock everything
-          again</button>.</p>
+      <p class="sub">Beat a mini-game to unlock each project.<button class="link" id="reset2" type="button"></button>
+      </p>
       <div class="path">
         <div class="cell"><button class="node" type="button" data-id="l1" data-game="coins"
             data-title="Level 1: Coin Rush"
@@ -1120,13 +1128,14 @@
           </button>
           <button class="mini relock" type="button" hidden>Lock &amp; play again</button>
         </div>
+        <p> Short on time? <button class="link" id="skip2" type="button">Unlock everything</button></p>
       </div>
     </section>
 
     <article class="level gated" id="l1">
       <div class="top">
         <span class="badge">Level 1</span><span class="diff">Team of 3</span>
-        <figure class="photo cover"><img src="images/weigh-out-cover.jpg" alt="Weigh Out gameplay screenshot"
+        <figure class="photo cover"><img src="WeighMain.PNG" alt="Weigh Out gameplay screenshot"
             onerror="this.remove()"></figure>
       </div>
       <div class="body">
@@ -1138,7 +1147,8 @@
         <div class="links">
           <!-- VIDEO: put your file at videos/weigh-out.mp4. Or swap data-mp4 for data-vimeo="ID" or data-yt="ID" -->
           <button class="btn" type="button" data-video data-mp4="weigh-out.mp4" data-poster="images/weigh-out-cover.jpg"
-            data-title="Weigh Out gameplay">Watch gameplay</button><a class="btn alt" href="#">Read the GDD</a>
+            data-title="Weigh Out gameplay">Watch gameplay</button><a class="btn alt"
+            href="Weigh Out – Game Design Document.pdf">Read the GDD</a>
         </div>
         <section class="pg">
           <h4>Overview</h4>
@@ -1172,10 +1182,9 @@
           <p><b>Why it works:</b> every shot is a trade-off. Hitting a rival helps you and hurts them, but it spends
             mana and exposes you to return fire.</p>
           <div class="shots">
-            <figure class="photo"><img src="images/weigh-out-weight-hud.jpg"
-                alt="Weight scale HUD at low and high weight" onerror="this.remove()"></figure>
-            <figure class="photo"><img src="images/weigh-out-shot-hit.jpg" alt="A shot hitting a player"
+            <figure class="photo"><img src="Shoot.png" alt="Weight scale HUD at low and high weight"
                 onerror="this.remove()"></figure>
+            <figure class="photo"><img src="ShotAt.PNG" alt="A shot hitting a player" onerror="this.remove()"></figure>
           </div>
         </section>
         <section class="pg">
@@ -1196,11 +1205,11 @@
             <li><b>Dash:</b> a short burst for platforming.</li>
           </ul>
           <div class="shots">
-            <figure class="photo"><img src="images/weigh-out-charger.jpg"
-                alt="Charger station with a timed button prompt" onerror="this.remove()"></figure>
-            <figure class="photo"><img src="images/weigh-out-laser.jpg" alt="A laser" onerror="this.remove()"></figure>
-            <figure class="photo"><img src="images/weigh-out-shield.jpg" alt="The shield being drawn"
-                onerror="this.remove()"></figure>
+            <figure class="photo"><img src="Shield.PNG" alt="Charger station with a timed button prompt"
+                onerror="this.remove()">
+            </figure>
+            <figure class="photo"><img src="Launcher.PNG" alt="A laser" onerror="this.remove()"></figure>
+            <figure class="photo"><img src="Pull.PNG" alt="The shield being drawn" onerror="this.remove()"></figure>
           </div>
         </section>
         <section class="pg">
@@ -1218,9 +1227,11 @@
           <p>When a player passes through the red mist, lava starts rising from the bottom. It reaches the top of floor
             3 in about 2 minutes.</p>
           <div class="shots">
-            <figure class="photo"><img src="images/weigh-out-level-side.jpg"
-                alt="Side-view diagram of the vertical level" onerror="this.remove()"></figure>
-            <figure class="photo"><img src="images/weigh-out-level-top.jpg" alt="Top-down diagram of floors 1 and 2"
+            <figure class="photo"><img src="Level1.png" alt="Side-view diagram of the vertical level"
+                onerror="this.remove()"></figure>
+            <figure class="photo"><img src="Level2.png" alt="Top-down diagram of floors 1 and 2"
+                onerror="this.remove()"></figure>
+            <figure class="photo"><img src="Level3.png" alt="Top-down diagram of floors 1 and 2"
                 onerror="this.remove()"></figure>
           </div>
         </section>
@@ -1238,8 +1249,8 @@
             <li>Changed the win condition to a 15-second hold, giving trailing players a final fight.</li>
           </ul>
           <div class="shots">
-            <figure class="photo"><img src="images/weigh-out-before-after.jpg"
-                alt="Level layout before and after the redesign" onerror="this.remove()"></figure>
+            <figure class="photo"><img src="Changed.png" alt="Level layout before and after the redesign"
+                onerror="this.remove()"></figure>
           </div>
         </section>
         <section class="pg">
@@ -1255,10 +1266,10 @@
               weight (not health) is what changes.</li>
           </ul>
           <div class="shots">
-            <figure class="photo"><img src="images/weigh-out-cell.jpg" alt="Sealed starting cell and the broken wall"
+            <figure class="photo"><img src="UIBefore.png" alt="Sealed starting cell and the broken wall"
                 onerror="this.remove()"></figure>
-            <figure class="photo"><img src="images/weigh-out-hud-before-after.jpg"
-                alt="Old weight bar next to the new scale" onerror="this.remove()"></figure>
+            <figure class="photo"><img src="UIAfter.png" alt="Old weight bar next to the new scale"
+                onerror="this.remove()"></figure>
           </div>
         </section>
         <section class="pg">
@@ -1273,8 +1284,8 @@
           <p>Workflow: short task notes for the team, a full GDD for the design, and Perforce version control while we
             worked in the same place. We’re moving to Git for remote work.</p>
           <div class="shots">
-            <figure class="photo"><img src="images/weigh-out-gdd-cover.jpg" alt="Cover page of the Weigh Out GDD"
-                onerror="this.remove()"></figure>
+            <figure class="photo"><img src="Role.jpg" alt="Cover page of the Weigh Out GDD" onerror="this.remove()">
+            </figure>
           </div>
         </section>
         <section class="pg">
@@ -1292,8 +1303,8 @@
     <article class="level gated" id="l2">
       <div class="top">
         <span class="badge">Level 2</span><span class="diff">Team of 3</span>
-        <figure class="photo cover"><img src="images/ugc-cover.jpg" alt="UGC gameplay screenshot"
-            onerror="this.remove()"></figure>
+        <figure class="photo cover"><img src="UGCFirst.png" alt="UGC gameplay screenshot" onerror="this.remove()">
+        </figure>
       </div>
       <div class="body">
         <h3>UGC</h3>
@@ -1301,7 +1312,7 @@
             development, on hold</span><span>Nov 2025–Present</span></div>
         <p>Two teams race to defeat their own boss. Players can hurt each other but not the rival boss, so interference
           is always a choice.</p>
-        <div class="links"><a class="btn" href="#">Watch mechanics video</a></div>
+        <div class="links"><a class="btn" data-video data-mp4="UGC.mp4">Watch mechanics video</a></div>
         <section class="pg">
           <h4>Overview</h4>
           <dl class="facts">
@@ -1317,9 +1328,9 @@
           <p>I designed it for broad appeal: cute characters, funny guns that stack on the head, a mouth that moves with
             audio input, and proximity voice chat.</p>
           <div class="shots">
-            <figure class="photo"><img src="images/ugc-characters.jpg" alt="UGC characters" onerror="this.remove()">
+            <figure class="photo"><img src="UGCsecond.png" alt="UGC characters" onerror="this.remove()">
             </figure>
-            <figure class="photo"><img src="images/ugc-gameplay.jpg" alt="UGC gameplay" onerror="this.remove()">
+            <figure class="photo"><img src="UGCSecondd.png" alt="UGC gameplay" onerror="this.remove()">
             </figure>
           </div>
         </section>
@@ -1331,7 +1342,7 @@
           <p>The rooms come in two types: combat rooms that drop guns, and platforming challenges that grant abilities
             such as dash, shield, wall-walking and swinging. Harder challenges give stronger abilities.</p>
           <div class="shots">
-            <figure class="photo"><img src="images/ugc-map.jpg" alt="Top-down map of UGC" onerror="this.remove()">
+            <figure class="photo"><img src="UGCMap.png" alt="Top-down map of UGC" onerror="this.remove()">
             </figure>
           </div>
         </section>
@@ -1347,9 +1358,9 @@
               one of the two.</li>
           </ul>
           <div class="shots">
-            <figure class="photo"><img src="images/ugc-shield.jpg" alt="Drawing the shield" onerror="this.remove()">
+            <figure class="photo"><img src="UGCGravity.png" alt="Drawing the shield" onerror="this.remove()">
             </figure>
-            <figure class="photo"><img src="images/ugc-gravity.jpg" alt="Gravity abilities" onerror="this.remove()">
+            <figure class="photo"><img src="UGCSwing.png" alt="Gravity abilities" onerror="this.remove()">
             </figure>
           </div>
         </section>
@@ -1360,7 +1371,7 @@
           <p>I also solved Steam multiplayer connection failures in recent Unreal versions (caused by App ID 480) with a
             workaround that restored client-host connections.</p>
           <div class="shots">
-            <figure class="photo"><img src="images/ugc-physics.jpg" alt="Character physics" onerror="this.remove()">
+            <figure class="photo"><img src="UGCPhysics.png" alt="Character physics" onerror="this.remove()">
             </figure>
           </div>
         </section>
@@ -1372,7 +1383,7 @@
     <article class="level gated" id="l3">
       <div class="top">
         <span class="badge">Level 3</span><span class="diff">Team of 4</span>
-        <figure class="photo cover"><img src="images/a-cigarette-cover.jpg" alt="A Cigarette gameplay screenshot"
+        <figure class="photo cover"><img src="CigFirst.png" alt="A Cigarette gameplay screenshot"
             onerror="this.remove()"></figure>
       </div>
       <div class="body">
@@ -1381,7 +1392,7 @@
             5</span><span>Canceled</span><span>Mar–Aug 2025</span></div>
         <p>The player is a cigarette who must light itself to ignite torches and open doors, but burning shrinks it.
           Burn out and you die.</p>
-        <div class="links"><a class="btn" href="#">Watch mechanics video</a></div>
+        <div class="links"><a class="btn" data-video data-mp4="Cigarette.mp4">Watch mechanics video</a></div>
         <section class="pg">
           <h4>Overview</h4>
           <dl class="facts">
@@ -1395,9 +1406,9 @@
             <dd>Canceled after 5 months of prototyping.</dd>
           </dl>
           <div class="shots">
-            <figure class="photo"><img src="images/a-cigarette-menu.jpg" alt="Main menu" onerror="this.remove()">
+            <figure class="photo"><img src="CigSecond.png" alt="Main menu" onerror="this.remove()">
             </figure>
-            <figure class="photo"><img src="images/a-cigarette-gameplay.jpg" alt="Gameplay" onerror="this.remove()">
+            <figure class="photo"><img src="CigSec.png" alt="Gameplay" onerror="this.remove()">
             </figure>
           </div>
         </section>
@@ -1411,10 +1422,9 @@
             which defeats enemies faster. Some enemies, such as teeth with braces, can only be broken by timed finishes.
           </p>
           <div class="shots">
-            <figure class="photo"><img src="images/a-cigarette-burn.jpg" alt="Burning mechanic" onerror="this.remove()">
+            <figure class="photo"><img src="CigRegrowth.png" alt="Burning mechanic" onerror="this.remove()">
             </figure>
-            <figure class="photo"><img src="images/a-cigarette-combat.jpg" alt="Combat and regrowth"
-                onerror="this.remove()"></figure>
+            <figure class="photo"><img src="CigBurn.png" alt="Combat and regrowth" onerror="this.remove()"></figure>
           </div>
         </section>
         <section class="pg">
@@ -1439,8 +1449,8 @@
       <div class="cards">
         <article class="level">
           <div class="top">
-            <figure class="photo cover"><img src="images/puzzle-cover.jpg" alt="Puzzle room screenshot"
-                onerror="this.remove()"></figure>
+            <figure class="photo cover"><img src="Puzzle.png" alt="Puzzle room screenshot" onerror="this.remove()">
+            </figure>
           </div>
           <div class="body">
             <h3>Puzzle design</h3>
@@ -1448,24 +1458,25 @@
             <p>A room where you can hold only two objects, but it needs three statues, and one is outside. Placing one
               statue locks the doors, and the only way to free your hands is to swap an item for another object. There
               is a story, so you know what you have to do.</p>
-            <div class="links"><a class="btn" href="#">Play the puzzle</a></div>
+            <div class="links"><a class="btn"
+                href="https://drive.google.com/drive/folders/1UQe3XROYMgzvx6mnFJB5d46cvzotN1cn">Play the puzzle</a>
+            </div>
           </div>
         </article>
         <article class="level">
           <div class="top">
-            <figure class="photo cover"><img src="images/gdd-cover.jpg" alt="Weigh Out GDD cover"
-                onerror="this.remove()"></figure>
+            <figure class="photo cover"><img src="First.JPG" alt="Weigh Out GDD cover" onerror="this.remove()"></figure>
           </div>
           <div class="body">
             <h3>Design document: Weigh Out</h3>
             <div class="tags"><span>GDD</span><span>Weigh Out</span></div>
             <p>Pitch, pillars, core loop, weight system, abilities, level design, controls and the playtest log.</p>
-            <div class="links"><a class="btn" href="#">Read the GDD</a></div>
+            <div class="links"><a class="btn" href="Weigh Out – Game Design Document.pdf">Read the GDD</a></div>
           </div>
         </article>
         <article class="level">
           <div class="top">
-            <figure class="photo cover"><img src="images/character-cover.jpg" alt="Game-ready character render"
+            <figure class="photo cover"><img src="Character.png" alt="Game-ready character render"
                 onerror="this.remove()"></figure>
           </div>
           <div class="body">
@@ -1477,21 +1488,22 @@
         </article>
         <article class="level">
           <div class="top">
-            <figure class="photo cover"><img src="images/environment-cover.jpg" alt="Environment screenshot"
-                onerror="this.remove()"></figure>
+            <figure class="photo cover"><img src="EnvArt.png" alt="Environment screenshot" onerror="this.remove()">
+            </figure>
           </div>
           <div class="body">
             <h3>Environment design</h3>
             <div class="tags"><span>Quixel Bridge</span><span>Unreal Engine 5</span></div>
             <p>I built this environment from Quixel Bridge assets and tried to capture a story in just a few shots: the
               ups and downs of life, and that life persists no matter what.</p>
-            <div class="links"><a class="btn" href="#">Watch the video</a></div>
+            <div class="links"><a class="btn" type="button" data-video data-mp4="Environment.mp4">Watch the video</a>
+            </div>
           </div>
         </article>
         <article class="level">
           <div class="top">
-            <figure class="photo cover"><img src="images/menu-cover.jpg" alt="A Cigarette main menu"
-                onerror="this.remove()"></figure>
+            <figure class="photo cover"><img src="Menu.png" alt="A Cigarette main menu" onerror="this.remove()">
+            </figure>
           </div>
           <div class="body">
             <h3>Main menu design</h3>
@@ -1499,7 +1511,7 @@
             <p>The story is told by an old man, so players feel like they’re sitting with their grandfather as the whole
               game unfolds as his story. I built the menu from familiar storytelling elements: a book, a cup of coffee
               and a cigarette.</p>
-            <div class="links"><a class="btn" href="#">Watch the video</a></div>
+            <div class="links"><a class="btn" data-video data-mp4="MainMenu.mp4">Watch the video</a></div>
           </div>
         </article>
       </div>
@@ -1512,7 +1524,7 @@
       <p><a href="tel:+37498161895" style="color:inherit">+374 98161895</a> · motaharimajdparham@gmail.com · Yerevan,
         Armenia</p>
       <a class="btn" href="mailto:motaharimajdparham@gmail.com">Email me</a>
-      <a class="btn alt" href="#">Download CV</a>
+      <a class="btn alt" href="Parham_Motaharimajd_Game_Designer_CV.pdf">Download CV</a>
       <p><button class="link" id="reset" type="button">Reset my progress</button></p>
     </div>
   </footer>
@@ -1575,7 +1587,7 @@
     $('#gbody').addEventListener('click', e => {if (e.target.closest('[data-again]')) play()});
     $('#close').onclick = () => $('#dlg').close();
     $('#dlg').addEventListener('close', () => cleanup());
-    $('#skip').onclick = $('#skip2').onclick = unlockAll;
+    $('#skip2').onclick = unlockAll;
     $('#reset').onclick = $('#reset2').onclick = () => {state.clear(); render(); toast('Progress reset'); scrollTo(0, 0)};
 
     /* Mini-games: each takes (box, win, lose) and returns a cleanup function */
