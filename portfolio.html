@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parham Motaharimajd – Game Designer</title>
+<meta name="description" content="Game designer portfolio: gameplay systems, combat and multiplayer design in Unreal Engine 5. Play mini-games to unlock projects, or skip straight to the work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#DCEBF7;--navy:#0B1F44;--navy-2:#1B3A75;--orange:#F57C00;--orange-2:#FF9330;--white:#fff;--muted:#3F5278;--line:#B9D0E6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--sky);color:var(--navy);font:400 1.125rem/1.6 Calibri,Carlito,"Segoe UI",Arial,sans-serif}
+h1,h2,h3{font-weight:700;line-height:1.05;margin:0}
+a{color:var(--navy);text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:4px}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+button{font:inherit;color:inherit}
+
+/* HUD */
+.hud{position:sticky;top:0;z-index:20;background:var(--navy);color:var(--white);border-bottom:3px solid var(--orange)}
+.hud .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.hud strong{font-size:1.15rem}
+.hud nav{display:flex;align-items:center;gap:20px}
+.hud a{color:var(--white);text-decoration:none;font-weight:700}
+.hud a:hover{color:var(--orange-2)}
+#count{background:var(--navy-2);border:2px solid var(--orange);padding:2px 12px;font-weight:700;font-size:1rem}
+.mini{background:transparent;border:2px solid var(--white);color:var(--white);padding:2px 12px;cursor:pointer;font-weight:700;font-size:1rem}
+.mini:hover{border-color:var(--orange-2);color:var(--orange-2)}
+#xp{position:absolute;left:0;bottom:-3px;height:3px;width:0;background:var(--orange-2);box-shadow:0 0 10px var(--orange-2);transition:width .6s}
+
+/* Title screen */
+.title{position:relative;overflow:hidden;background:var(--navy);color:var(--white);
+  background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px}
+.title::after{content:"";position:absolute;right:-120px;bottom:-160px;width:460px;height:460px;border-radius:50%;background:var(--orange)}
+.block{position:absolute;background:var(--orange-2);animation:float 6s ease-in-out infinite}
+.b1{width:34px;height:34px;left:8%;top:18%}.b2{width:20px;height:20px;left:46%;top:12%;animation-delay:-2s;background:#fff;opacity:.7}.b3{width:26px;height:26px;left:40%;bottom:14%;animation-delay:-4s}
+@keyframes float{50%{transform:translateY(-16px) rotate(8deg)}}
+.title .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center;padding-top:60px;padding-bottom:88px}
+.pill{display:inline-block;background:var(--orange);color:var(--navy);font-weight:700;padding:4px 14px;border:2px solid var(--white);margin-bottom:20px}
+.title h1{font-size:clamp(2.8rem,7vw,5.2rem);letter-spacing:-.02em;text-shadow:5px 5px 0 var(--orange)}
+.title p{color:#C9D7EE;font-size:1.3rem;max-width:34ch;margin:24px 0 32px}
+.btn{display:inline-block;background:var(--orange);color:var(--navy);font-weight:700;padding:12px 26px;border:3px solid var(--navy);box-shadow:5px 5px 0 var(--navy);text-decoration:none;margin:0 14px 14px 0;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.btn:hover{background:var(--orange-2);transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--navy)}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--navy)}
+.title .btn,footer .btn{border-color:var(--white);box-shadow:5px 5px 0 var(--white)}
+.title .btn:hover,footer .btn:hover{box-shadow:8px 8px 0 var(--white)}
+.btn.alt{background:var(--white)}
+.title .btn.alt,footer .btn.alt{background:var(--navy);color:var(--white)}
+
+/* Photo slots */
+.photo{position:relative;margin:0;overflow:hidden;background:linear-gradient(135deg,var(--navy-2),var(--navy))}
+.photo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 76% 28%,var(--orange) 0 13%,transparent 13.5%),radial-gradient(circle at 18% 82%,rgba(255,255,255,.12) 0 24%,transparent 24.5%)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.portrait{aspect-ratio:4/5;border:4px solid var(--white);box-shadow:12px 12px 0 var(--orange);margin-right:12px}
+.cover{aspect-ratio:16/9}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:12px 28px 0}
+.strip .photo{aspect-ratio:4/3;border:3px solid var(--navy)}
+
+h2{font-size:2.3rem;margin:80px 0 12px}
+.sub{color:var(--muted);margin:0 0 36px}
+.link{background:none;border:0;padding:0;text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:4px;font-weight:700;cursor:pointer}
+
+/* World map */
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
+.path::before{content:"";position:absolute;left:16%;right:16%;top:68px;border-top:5px dashed var(--navy);opacity:.35}
+.cell{display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.relock{background:var(--white);color:var(--navy);border-color:var(--navy);padding:6px 14px}
+.relock:hover{background:var(--orange);border-color:var(--navy);color:var(--navy)}
+.node{position:relative;background:var(--white);border:3px solid var(--navy);box-shadow:8px 8px 0 var(--navy);padding:22px 16px 20px;text-align:center;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.node:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--navy)}
+.node b{display:block;font-size:1.4rem}
+.node small{display:block;color:var(--muted);margin:2px 0 8px}
+.node .st{display:inline-block;background:var(--sky);border:2px solid var(--navy);padding:0 10px;font-size:.92rem;font-weight:700}
+.ic{width:84px;height:84px;border-radius:50%;background:var(--navy);color:var(--orange-2);display:grid;place-items:center;margin:0 auto 12px;border:4px solid var(--navy)}
+.open .ic,.node.open .ic{background:var(--orange);color:var(--navy)}
+.node.open .st{background:var(--orange)}
+.sh{transform-origin:17px 11px;transition:transform .4s}
+.node.open .sh{transform:translate(3px,-3px) rotate(28deg)}
+.pop{animation:pop .6s}
+@keyframes pop{30%{transform:scale(1.1) rotate(-2deg)}60%{transform:scale(.97)}}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* Gated content */
+.js .gated{display:none}
+.js .gated.open{display:block}
+.level{background:var(--white);border:3px solid var(--navy);box-shadow:9px 9px 0 var(--navy);margin:56px 0 0}
+.level .top{position:relative;border-bottom:3px solid var(--navy)}
+.badge{position:absolute;z-index:3;left:0;top:18px;background:var(--orange);color:var(--navy);font-weight:700;padding:5px 18px 5px 16px;border:3px solid var(--navy);border-left:0}
+.diff{position:absolute;z-index:3;right:14px;top:16px;background:var(--navy);color:var(--white);padding:3px 12px;font-size:.95rem}
+.body{padding:26px 28px 30px}
+.level h3{font-size:1.9rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px}
+.tags span{background:var(--sky);border:2px solid var(--navy);padding:1px 12px;font-size:.95rem;font-weight:700}
+.level p{margin:0 0 18px;max-width:62ch}
+.links .btn{padding:8px 18px;margin:0 12px 10px 0;font-size:1rem}
+details{border-top:2px dashed var(--line);margin-top:14px;padding-top:16px}
+summary{cursor:pointer;font-weight:700}
+details dl{margin:18px 0 0;display:grid;grid-template-columns:140px 1fr;gap:14px 24px}
+details dt{font-weight:700;color:#B35800}
+details dd{margin:0;max-width:58ch}
+.player{display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start;background:var(--white);border:3px solid var(--navy);box-shadow:9px 9px 0 var(--navy);padding:32px}
+.player .photo{aspect-ratio:1/1;border:4px solid var(--navy);border-radius:50%}
+.player h3{font-size:1.7rem}
+.class{color:#B35800;font-weight:700;margin:4px 0 14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.stat{background:var(--navy);color:var(--white);padding:14px;text-align:center;border-bottom:4px solid var(--orange)}
+.stat b{display:block;font-size:2rem;line-height:1}
+.stat span{font-size:.95rem;color:#C9D7EE}
+.skill{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;margin:10px 0;font-weight:700}
+.bar{height:16px;background:var(--sky);border:2px solid var(--navy)}
+.bar i{display:block;height:100%;width:var(--v);background:repeating-linear-gradient(90deg,var(--orange) 0 10px,var(--orange-2) 10px 12px)}
+
+.pg{border-top:2px dashed var(--line);margin-top:24px;padding-top:20px}
+.pg h4{font-size:1.4rem;margin:0 0 10px}
+.pg ul,.pg ol{margin:0 0 16px;padding-left:22px;max-width:62ch}
+.pg li{margin-bottom:6px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 0}
+.shots .photo{aspect-ratio:16/10;border:3px solid var(--navy)}
+.facts{display:grid;grid-template-columns:130px 1fr;gap:10px 24px;margin:0 0 16px}
+.facts dt{font-weight:700;color:#B35800}.facts dd{margin:0;max-width:58ch}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.cards .level{margin:0}
+.cards .body p{margin-bottom:14px}
+.abt{margin-top:0}
+@media(max-width:780px){.facts{grid-template-columns:1fr;gap:2px}.facts dd{margin-bottom:10px}.cards{grid-template-columns:1fr}}
+footer{background:var(--navy);color:var(--white);margin-top:96px;padding:56px 0 48px;border-top:6px solid var(--orange);text-align:center}
+footer h2{margin:0 0 10px;font-size:2.4rem;text-shadow:4px 4px 0 var(--orange)}
+footer p{color:#C9D7EE;margin:0 0 28px}
+footer .link{color:#C9D7EE;font-weight:400;font-size:.95rem}
+
+/* Mini-game dialog */
+dialog{border:3px solid var(--navy);box-shadow:10px 10px 0 var(--orange);padding:0;width:min(580px,92vw);background:var(--white);color:var(--navy)}
+dialog::backdrop{background:rgba(11,31,68,.78)}
+.dh{display:flex;justify-content:space-between;align-items:center;background:var(--navy);color:var(--white);padding:12px 18px}
+.dh h3{font-size:1.3rem}
+.dh button{background:none;border:2px solid var(--white);color:var(--white);font-size:1.2rem;line-height:1;width:34px;height:34px;cursor:pointer}
+.gi{padding:16px 20px 0;margin:0}
+.gbody{padding:12px 20px 22px}
+.hudline{display:flex;justify-content:space-between;font-weight:700;margin:0 0 10px}
+.msg{min-height:2.6em;margin:10px 0 0}
+canvas{display:block;width:100%;height:auto;border:3px solid var(--navy);touch-action:none;background:var(--navy)}
+.arena{position:relative;height:270px;background:var(--navy);background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:30px 30px;border:3px solid var(--navy);overflow:hidden}
+.coin{position:absolute;width:60px;height:60px;border-radius:50%;background:var(--orange-2);border:4px solid var(--white);cursor:pointer;animation:pop .3s}
+.mem{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:380px;margin:0 auto}
+.card{aspect-ratio:1;background:var(--navy);color:var(--navy);border:3px solid var(--navy);font-size:2.2rem;cursor:pointer}
+.card.on{background:var(--orange);color:var(--navy)}
+.card.done{background:var(--sky);color:var(--navy)}
+.react{width:100%;height:170px;background:var(--navy);color:var(--white);border:3px solid var(--navy);font-size:1.6rem;font-weight:700;cursor:pointer}
+.react.go{background:var(--orange);color:var(--navy)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,120px);background:var(--navy);color:var(--white);border:3px solid var(--orange);padding:10px 22px;font-weight:700;z-index:50;transition:transform .3s}
+.toast.show{transform:translate(-50%,0)}
+
+@media(max-width:780px){
+  .title .wrap{grid-template-columns:1fr;gap:44px;padding-bottom:72px}
+  .portrait{max-width:300px}
+  .path{grid-template-columns:1fr}.path::before{display:none}
+  .player{grid-template-columns:1fr;padding:22px}.player .photo{max-width:180px}
+  .skill{grid-template-columns:110px 1fr}
+  details dl{grid-template-columns:1fr;gap:4px}details dd{margin-bottom:12px}
+  .strip{padding:12px 16px 0}.body{padding:22px 18px}
+  .hud nav{gap:12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.block,.pop,.shake,.coin{animation:none}.btn,.node,#xp,.sh,.toast{transition:none}}
+.video{position:relative;aspect-ratio:16/9;background:var(--navy);border-bottom:3px solid var(--navy);display:grid;place-items:center;color:#C9D7EE;font-weight:700}
+#vdlg{width:min(900px,94vw)}
+#vdlg .video{border-bottom:0}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<header class="hud">
+  <div class="wrap">
+    <strong>Parham Motaharimajd</strong>
+    <nav aria-label="Main">
+      <a href="#about">About</a><a href="#map">Projects</a><a href="#side">Side projects</a><a href="#contact">Contact</a>
+      <span id="count">0/3 unlocked</span>
+      <button class="mini" id="skip" type="button">Skip games</button>
+    </nav>
+  </div>
+  <div id="xp"></div>
+</header>
+
+<section class="title">
+  <span class="block b1"></span><span class="block b2"></span><span class="block b3"></span>
+  <div class="wrap">
+    <div>
+      <span class="pill">Game designer</span>
+      <h1>Parham Motaharimajd</h1>
+      <p>Lead designer of Weigh Out, heading to Steam. Play mini-games to unlock my projects.</p>
+      <a class="btn" href="#map">Press start</a>
+      <a class="btn alt" href="#">Download CV</a>
+    </div>
+    <figure class="photo portrait"><img src="images/portrait.jpg" alt="Portrait of Parham Motaharimajd" onerror="this.remove()"></figure>
+  </div>
+</section>
+
+<main class="wrap">
+  <section id="about" aria-labelledby="about-h">
+    <h2 id="about-h">About me</h2>
+    <div class="player abt">
+      <figure class="photo"><img src="images/about.jpg" alt="Parham Motaharimajd at work" onerror="this.remove()"></figure>
+      <div>
+        <h3>Parham Motaharimajd</h3>
+        <div class="class">Game designer · Yerevan, Armenia</div>
+        <p>I’m a game designer focused on gameplay systems, combat and multiplayer design in Unreal Engine 5.</p>
+        <p>I design by testing. I build a prototype, watch real people play it, and redesign whatever doesn’t work. Weigh Out went through two playtest rounds and was reshaped by both.</p>
+        <p>I started as a music composer at 14, and that still shapes how I think about pacing and feel. Today I lead design on Weigh Out and also make characters, animation, VFX and SFX, and script gameplay in Blueprints.</p>
+      </div>
+    </div>
+  </section>
+  <section id="map" aria-labelledby="map-h">
+    <h2 id="map-h">Projects</h2>
+    <p class="sub">Beat a mini-game to unlock each project. Short on time? <button class="link" id="skip2" type="button">Unlock everything</button> or <button class="link" id="reset2" type="button">lock everything again</button>.</p>
+    <div class="path">
+      <div class="cell"><button class="node" type="button" data-id="l1" data-game="coins" data-title="Level 1: Coin Rush" data-help="Steer the orange square: arrow keys, WASD, or drag. Collect 3 coins and avoid the light-blue diamonds. You have 3 lives.">
+        <span class="ic"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path class="sh" d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="11" width="16" height="11" rx="2" fill="currentColor"/></svg></span>
+        <b>Weigh Out</b><small>Multiplayer platformer · Demo</small><span class="st">Locked</span>
+      </button>
+      <button class="mini relock" type="button" hidden>Lock &amp; play again</button></div>
+      <div class="cell"><button class="node" type="button" data-id="l2" data-game="memory" data-title="Level 2: Memory Match" data-help="Flip cards and find all three matching pairs.">
+        <span class="ic"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path class="sh" d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="11" width="16" height="11" rx="2" fill="currentColor"/></svg></span>
+        <b>UGC</b><small>Boss-race platformer · On hold</small><span class="st">Locked</span>
+      </button>
+      <button class="mini relock" type="button" hidden>Lock &amp; play again</button></div>
+      <div class="cell"><button class="node" type="button" data-id="l3" data-game="reflex" data-title="Boss: Quick Draw" data-help="Wait for the button to turn orange, then click it. Do it twice to win.">
+        <span class="ic"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path class="sh" d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="11" width="16" height="11" rx="2" fill="currentColor"/></svg></span>
+        <b>A Cigarette</b><small>2.5D platformer · Canceled</small><span class="st">Locked</span>
+      </button>
+      <button class="mini relock" type="button" hidden>Lock &amp; play again</button></div>
+    </div>
+  </section>
+
+  <article class="level gated" id="l1">
+    <div class="top">
+      <span class="badge">Level 1</span><span class="diff">Team of 3</span>
+      <figure class="photo cover"><img src="images/weigh-out-cover.jpg" alt="Weigh Out gameplay screenshot" onerror="this.remove()"></figure>
+    </div>
+    <div class="body">
+      <h3>Weigh Out</h3>
+      <div class="tags"><span>First-person multiplayer platformer</span><span>Unreal Engine 5</span><span>Lead designer</span><span>Jul 2026–Present</span></div>
+      <p>Wizards are locked in an ancient prison, and only one clan can escape. Teams race to the top while shooting each other, but nobody takes damage. Shots change weight instead.</p>
+      <div class="links"><!-- VIDEO: put your file at videos/weigh-out.mp4. Or swap data-mp4 for data-vimeo="ID" or data-yt="ID" -->
+        <button class="btn" type="button" data-video data-mp4="videos/weigh-out.mp4" data-poster="images/weigh-out-cover.jpg" data-title="Weigh Out gameplay">Watch gameplay</button><a class="btn alt" href="#">Read the GDD</a></div>
+        <section class="pg"><h4>Overview</h4><p>It started as a 6-day game jam prototype in Iran. Strong reactions from fellow jammers led us to turn it into a full game.</p><dl class="facts"><dt>Role</dt><dd>Lead game designer. Also character, animation, VFX, SFX, UI and Blueprints (support).</dd><dt>Team</dt><dd>3 core members (design, programming, environment art) plus a contracted social media editor.</dd><dt>Engine</dt><dd>Unreal Engine 5</dd><dt>Status</dt><dd>Playable demo. Steam release planned for around March 2027.</dd><dt>Pillars</dt><dd>Chaos, mastery, comeback, tension.</dd></dl></section>
+        <section class="pg"><h4>The core idea: weight</h4><p><b>The problem:</b> the game is a race. I wanted players to interfere with each other without damage or elimination, so combat stays part of movement.</p><p><b>The solution:</b> every shot transfers weight on a scale from 0 to 100. The shooter gets lighter and the target gets heavier.</p><ul><li>A basic shot: the shooter loses 20, the target gains 18.</li><li>A homing projectile: the target gains 60, the shooter loses 30.</li><li>Lighter players jump higher, fall slower and are harder to launch off a platform. Heavier players do the opposite.</li></ul><p><b>Why it works:</b> every shot is a trade-off. Hitting a rival helps you and hurts them, but it spends mana and exposes you to return fire.</p><div class="shots"><figure class="photo"><img src="images/weigh-out-weight-hud.jpg" alt="Weight scale HUD at low and high weight" onerror="this.remove()"></figure><figure class="photo"><img src="images/weigh-out-shot-hit.jpg" alt="A shot hitting a player" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Supporting mechanics</h4><ul><li><b>Charger stations:</b> standing on one lowers your weight over time, and a timed button press every 2 seconds gives a bonus drop. A non-combat way to climb.</li><li><b>Lasers:</b> static lasers add 30 weight once, and pulsing lasers add weight while you stand in them.</li><li><b>Launcher bomb:</b> the core movement tool. Launches everyone near the blast, with power fading by distance.</li><li><b>Homing projectile:</b> a comeback tool picked up from a white mist. One use, easier to aim, bounces once off a wall.</li><li><b>Pull:</b> pull a teammate forward, drag a rival off the final platform, or yank yourself toward fixed objects.</li><li><b>Shield:</b> drawn with the mouse. It blocks shots and pulls, and can be drawn behind you so a launch doesn’t knock you off.</li><li><b>Dash:</b> a short burst for platforming.</li></ul><div class="shots"><figure class="photo"><img src="images/weigh-out-charger.jpg" alt="Charger station with a timed button prompt" onerror="this.remove()"></figure><figure class="photo"><img src="images/weigh-out-laser.jpg" alt="A laser" onerror="this.remove()"></figure><figure class="photo"><img src="images/weigh-out-shield.jpg" alt="The shield being drawn" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Level design: the vertical level</h4><p>The level escalates in three floors, each adding a new pressure.</p><ol><li><b>Floor 1:</b> two starting rooms, one per team. Teams can only shoot each other through windows.</li><li><b>Floor 2:</b> the first meeting point. Platforms around a circle leave the center open for fights, and they re-arrange every round so players can’t memorize jumps.</li><li><b>Floor 3:</b> a long jump that needs weight 30 or less, so players must fight or use a charger first.</li><li><b>Final platform:</b> hold it for 15 seconds to win the round. If a rival arrives, the timer stops and you fight again.</li></ol><p>When a player passes through the red mist, lava starts rising from the bottom. It reaches the top of floor 3 in about 2 minutes.</p><div class="shots"><figure class="photo"><img src="images/weigh-out-level-side.jpg" alt="Side-view diagram of the vertical level" onerror="this.remove()"></figure><figure class="photo"><img src="images/weigh-out-level-top.jpg" alt="Top-down diagram of floors 1 and 2" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Playtest round 1: fixing a repetitive loop</h4><p><b>Problem:</b> the first prototype was one loop on repeat: shoot, get lighter, launch, climb. Testers lost interest quickly.</p><p><b>Evidence:</b> two playtest rounds with up to 4 testers: casual players, a non-gamer and a professional FPS player.</p><p><b>What I changed:</b></p><ul><li>Split the level into escalating floors, each with a different job.</li><li>Added charger stations so weight loss isn’t only about shooting.</li><li>Added rising lava, so falling now costs a life instead of just a climb.</li><li>Changed the win condition to a 15-second hold, giving trailing players a final fight.</li></ul><div class="shots"><figure class="photo"><img src="images/weigh-out-before-after.jpg" alt="Level layout before and after the redesign" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Playtest round 2: making the game readable</h4><p><b>Problems:</b> players didn’t know where the goal was, and they forgot the launcher bomb was their main way to move.</p><ul><li><b>Opening camera sweep:</b> shows the goal at the start of every round.</li><li><b>Launcher icon on the HUD:</b> a constant reminder of the core ability.</li><li><b>Breakable cell wall:</b> each player starts sealed in a cell and must blast the wall with a launcher, which launches them out. The tutorial is the mechanic itself.</li><li><b>Weight scale HUD:</b> redesigned from a plain bar into a scale icon with numbers, so it’s clear that weight (not health) is what changes.</li></ul><div class="shots"><figure class="photo"><img src="images/weigh-out-cell.jpg" alt="Sealed starting cell and the broken wall" onerror="this.remove()"></figure><figure class="photo"><img src="images/weigh-out-hud-before-after.jpg" alt="Old weight bar next to the new scale" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>My role and workflow</h4><p>I direct the project and own all gameplay and level design. I also create the character and animation, make the VFX and SFX, design the UI, and script some gameplay in Blueprints.</p><ul><li><b>Armin Sadeghi:</b> main programmer (Blueprints)</li><li><b>Mohammadjavad Momemni:</b> environment art and assets</li><li><b>Saman Rostami:</b> social media videos (contracted)</li></ul><p>Workflow: short task notes for the team, a full GDD for the design, and Perforce version control while we worked in the same place. We’re moving to Git for remote work.</p><div class="shots"><figure class="photo"><img src="images/weigh-out-gdd-cover.jpg" alt="Cover page of the Weigh Out GDD" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>What’s next</h4><ul><li>Demo with the vertical level, plus locked teasers for the horizontal and arena levels.</li><li>Steam page in progress.</li><li>Full release with 3 level types and 3 levels each, followed by a solo mode and skins.</li></ul></section>
+      <div class="links" style="margin-top:28px"><a class="btn" href="#map" data-next="l2">Continue to UGC</a></div>
+    </div>
+  </article>
+
+  <article class="level gated" id="l2">
+    <div class="top">
+      <span class="badge">Level 2</span><span class="diff">Team of 3</span>
+      <figure class="photo cover"><img src="images/ugc-cover.jpg" alt="UGC gameplay screenshot" onerror="this.remove()"></figure>
+    </div>
+    <div class="body">
+      <h3>UGC</h3>
+      <div class="tags"><span>Third-person multiplayer action platformer</span><span>Unreal Engine 5</span><span>In development, on hold</span><span>Nov 2025–Present</span></div>
+      <p>Two teams race to defeat their own boss. Players can hurt each other but not the rival boss, so interference is always a choice.</p>
+      <div class="links"><a class="btn" href="#">Watch mechanics video</a></div>
+        <section class="pg"><h4>Overview</h4><dl class="facts"><dt>Role</dt><dd>Game designer / developer</dd><dt>Team</dt><dd>3</dd><dt>Engine</dt><dd>Unreal Engine 5</dd><dt>Status</dt><dd>In development, on hold until Weigh Out ships.</dd></dl><p>I designed it for broad appeal: cute characters, funny guns that stack on the head, a mouth that moves with audio input, and proximity voice chat.</p><div class="shots"><figure class="photo"><img src="images/ugc-characters.jpg" alt="UGC characters" onerror="this.remove()"></figure><figure class="photo"><img src="images/ugc-gameplay.jpg" alt="UGC gameplay" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>The map and player choice</h4><p>A circular map has a central boss room and 8 surrounding rooms, connected by speed-boost pipes. Everyone starts with only basic bullets and chooses: rush the boss, collect abilities first, or disrupt the other team.</p><p>The rooms come in two types: combat rooms that drop guns, and platforming challenges that grant abilities such as dash, shield, wall-walking and swinging. Harder challenges give stronger abilities.</p><div class="shots"><figure class="photo"><img src="images/ugc-map.jpg" alt="Top-down map of UGC" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Shield and gravity abilities</h4><ul><li><b>Shield (UGC and Weigh Out):</b> in UGC, several enemy bots firing different projectile patterns at once made dodging almost impossible. My solution was a shield you draw by hand, shaped to match the incoming shots, which leaves room for player creativity.</li><li><b>Gravity abilities (UGC only):</b> UGC is a PvPvE action platformer, so I added gravity tools to give players different ways to move: one lets you swing, the other lets you walk on walls and other surfaces. Players earn abilities by beating platforming challenges, but at the gravity challenge they must choose one of the two.</li></ul><div class="shots"><figure class="photo"><img src="images/ugc-shield.jpg" alt="Drawing the shield" onerror="this.remove()"></figure><figure class="photo"><img src="images/ugc-gravity.jpg" alt="Gravity abilities" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Technical design: hybrid physics</h4><p>To get a funny, physics-driven look without losing control or performance, I simulate physics only on the spine and upper body while the feet and hips stay kinematic.</p><p>I also solved Steam multiplayer connection failures in recent Unreal versions (caused by App ID 480) with a workaround that restored client-host connections.</p><div class="shots"><figure class="photo"><img src="images/ugc-physics.jpg" alt="Character physics" onerror="this.remove()"></figure></div></section>
+      <div class="links" style="margin-top:28px"><a class="btn" href="#map" data-next="l3">Continue to A Cigarette</a></div>
+    </div>
+  </article>
+
+  <article class="level gated" id="l3">
+    <div class="top">
+      <span class="badge">Level 3</span><span class="diff">Team of 4</span>
+      <figure class="photo cover"><img src="images/a-cigarette-cover.jpg" alt="A Cigarette gameplay screenshot" onerror="this.remove()"></figure>
+    </div>
+    <div class="body">
+      <h3>A Cigarette</h3>
+      <div class="tags"><span>2.5D action platformer</span><span>Unreal Engine 5</span><span>Canceled</span><span>Mar–Aug 2025</span></div>
+      <p>The player is a cigarette who must light itself to ignite torches and open doors, but burning shrinks it. Burn out and you die.</p>
+      <div class="links"><a class="btn" href="#">Watch mechanics video</a></div>
+        <section class="pg"><h4>Overview</h4><dl class="facts"><dt>Role</dt><dd>Game designer / narrative and mechanics</dd><dt>Team</dt><dd>4</dd><dt>Engine</dt><dd>Unreal Engine 5</dd><dt>Status</dt><dd>Canceled after 5 months of prototyping.</dd></dl><div class="shots"><figure class="photo"><img src="images/a-cigarette-menu.jpg" alt="Main menu" onerror="this.remove()"></figure><figure class="photo"><img src="images/a-cigarette-gameplay.jpg" alt="Gameplay" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Burn and regrowth</h4><p><b>Burn:</b> you must light yourself to progress, so burning is the core mechanic and the main source of tension.</p><p><b>Relief:</b> I didn’t want constant stress, so some puzzles put you out and pause the burn. Enemies exist to stall you and speed up burnout by stunning you.</p><p><b>Regrowth:</b> defeating enemies makes you grow again. A timed finish button chains attacks into a combo, which defeats enemies faster. Some enemies, such as teeth with braces, can only be broken by timed finishes.</p><div class="shots"><figure class="photo"><img src="images/a-cigarette-burn.jpg" alt="Burning mechanic" onerror="this.remove()"></figure><figure class="photo"><img src="images/a-cigarette-combat.jpg" alt="Combat and regrowth" onerror="this.remove()"></figure></div></section>
+        <section class="pg"><h4>Postmortem: why I canceled it</h4><p>After 5 months, team and outside playtests showed the gameplay loop didn’t work, and the scope was too big for our experience.</p><ul><li>Test the core loop early, before building content around it.</li><li>Scope to the team you have.</li><li>Cutting a project is a design decision, not a failure.</li></ul><p><b>What I did next:</b> Weigh Out started as a 6-day jam prototype, was playtested early, and was reshaped twice before we committed to a release.</p></section>
+      <div class="links" style="margin-top:28px"><a class="btn" href="#side">Continue to side projects</a></div>
+    </div>
+  </article>
+
+  <section id="side" aria-labelledby="side-h">
+    <h2 id="side-h">Side projects</h2>
+    <p class="sub">Design documents, puzzle design, and art. No mini-game needed.</p>
+    <div class="cards">
+      <article class="level"><div class="top"><figure class="photo cover"><img src="images/puzzle-cover.jpg" alt="Puzzle room screenshot" onerror="this.remove()"></figure></div>
+        <div class="body"><h3>Puzzle design</h3><div class="tags"><span>Puzzle design</span><span>Unreal Engine 5</span></div><p>A room where you can hold only two objects, but it needs three statues, and one is outside. Placing one statue locks the doors, and the only way to free your hands is to swap an item for another object. There is a story, so you know what you have to do.</p><div class="links"><a class="btn" href="#">Play the puzzle</a></div></div></article>
+      <article class="level"><div class="top"><figure class="photo cover"><img src="images/gdd-cover.jpg" alt="Weigh Out GDD cover" onerror="this.remove()"></figure></div>
+        <div class="body"><h3>Design document: Weigh Out</h3><div class="tags"><span>GDD</span><span>Weigh Out</span></div><p>Pitch, pillars, core loop, weight system, abilities, level design, controls and the playtest log.</p><div class="links"><a class="btn" href="#">Read the GDD</a></div></div></article>
+      <article class="level"><div class="top"><figure class="photo cover"><img src="images/character-cover.jpg" alt="Game-ready character render" onerror="this.remove()"></figure></div>
+        <div class="body"><h3>Character design</h3><div class="tags"><span>Blender</span><span>Hair cards</span><span>Unreal Engine 5</span></div><p>We needed a cute character to make people smile. I built it in Blender, added the hair with hair cards, and rendered it in UE5. Fully optimized and game ready.</p></div></article>
+      <article class="level"><div class="top"><figure class="photo cover"><img src="images/environment-cover.jpg" alt="Environment screenshot" onerror="this.remove()"></figure></div>
+        <div class="body"><h3>Environment design</h3><div class="tags"><span>Quixel Bridge</span><span>Unreal Engine 5</span></div><p>I built this environment from Quixel Bridge assets and tried to capture a story in just a few shots: the ups and downs of life, and that life persists no matter what.</p><div class="links"><a class="btn" href="#">Watch the video</a></div></div></article>
+      <article class="level"><div class="top"><figure class="photo cover"><img src="images/menu-cover.jpg" alt="A Cigarette main menu" onerror="this.remove()"></figure></div>
+        <div class="body"><h3>Main menu design</h3><div class="tags"><span>UI</span><span>Narrative</span></div><p>The story is told by an old man, so players feel like they’re sitting with their grandfather as the whole game unfolds as his story. I built the menu from familiar storytelling elements: a book, a cup of coffee and a cigarette.</p><div class="links"><a class="btn" href="#">Watch the video</a></div></div></article>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Ready for the next level?</h2>
+    <p><a href="tel:+37498161895" style="color:inherit">+374 98161895</a> · motaharimajdparham@gmail.com · Yerevan, Armenia</p>
+    <a class="btn" href="mailto:motaharimajdparham@gmail.com">Email me</a>
+    <a class="btn alt" href="#">Download CV</a>
+    <p><button class="link" id="reset" type="button">Reset my progress</button></p>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dt">
+  <div class="dh"><h3 id="dt">Mini-game</h3><button type="button" id="close" aria-label="Close">×</button></div>
+  <p class="gi" id="help"></p>
+  <div class="gbody" id="gbody"></div>
+</dialog>
+<dialog id="vdlg" aria-labelledby="vt">
+  <div class="dh"><h3 id="vt">Gameplay</h3><button type="button" id="vclose" aria-label="Close video">×</button></div>
+  <div class="video" id="vbox"></div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s), nodes=[...document.querySelectorAll('.node')];
+const KEY='pmm-progress';
+let state=new Set(), cur=null, cleanup=()=>{};
+try{state=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify([...state]))}catch(e){}};
+
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2400)}
+function render(){
+  nodes.forEach((n,i)=>{
+    const id=n.dataset.id, open=state.has(id), ready=i===0||state.has(nodes[i-1].dataset.id);
+    n.classList.toggle('open',open);
+    n.parentElement.querySelector('.relock').hidden=!open;
+    n.querySelector('.st').textContent=open?'Unlocked – view':ready?'Locked – play to unlock':'Locked – clear previous stage';
+    $('#'+id).classList.toggle('open',open);
+  });
+  $('#count').textContent=state.size+'/'+nodes.length+' unlocked';
+  $('#xp').style.width=state.size/nodes.length*100+'%';
+  save();
+}
+function unlockAll(){nodes.forEach(n=>state.add(n.dataset.id));render();toast('Everything unlocked')}
+
+nodes.forEach((n,i)=>n.addEventListener('click',()=>{
+  const id=n.dataset.id;
+  if(state.has(id)){$('#'+id).scrollIntoView();return}
+  if(i>0&&!state.has(nodes[i-1].dataset.id)){n.classList.remove('shake');void n.offsetWidth;n.classList.add('shake');toast('Clear the previous stage first');return}
+  launch(n);
+}));
+function launch(n){cur=n;$('#dt').textContent=n.dataset.title;$('#help').textContent=n.dataset.help;$('#dlg').showModal();play()}
+document.querySelectorAll('.relock').forEach(b=>b.onclick=()=>{
+  const n=b.parentElement.querySelector('.node');state.delete(n.dataset.id);render();launch(n)});
+function play(){cleanup();cleanup=G[cur.dataset.game]($('#gbody'),win,lose)||(()=>{})}
+function lose(msg){const m=$('#msg');if(m)m.innerHTML=msg+' <button class="btn" type="button" data-again style="padding:6px 16px;margin:8px 0 0">Try again</button>'}
+function win(){
+  cleanup();const n=cur;state.add(n.dataset.id);$('#dlg').close();render();
+  n.classList.remove('pop');void n.offsetWidth;n.classList.add('pop');
+  toast(n.dataset.title.split(':')[0]+' unlocked!');
+  setTimeout(()=>$('#'+n.dataset.id).scrollIntoView(),500);
+}
+$('#gbody').addEventListener('click',e=>{if(e.target.closest('[data-again]'))play()});
+$('#close').onclick=()=>$('#dlg').close();
+$('#dlg').addEventListener('close',()=>cleanup());
+$('#skip').onclick=$('#skip2').onclick=unlockAll;
+$('#reset').onclick=$('#reset2').onclick=()=>{state.clear();render();toast('Progress reset');scrollTo(0,0)};
+
+/* Mini-games: each takes (box, win, lose) and returns a cleanup function */
+const G={
+coins(box,win,lose){
+  box.innerHTML='<p class="hudline"><span>Coins: <b id="a">0</b>/3</span><span>Lives: <b id="b">3</b></span></p><canvas id="cv" width="520" height="300" tabindex="0" aria-label="Game area. Move with arrow keys or W A S D, or drag."></canvas><p class="msg" id="msg">Move with arrow keys, WASD, or drag. Grab coins and dodge the light-blue diamonds.</p>';
+  const cv=$('#cv'),x=cv.getContext('2d'),W=520,H=300,P={x:60,y:150,s:26},C={x:0,y:0,r:13};
+  const keys={},hz=[0,1,2].map(i=>({x:200+i*110,y:60+i*90,vx:(i%2?1:-1)*70,vy:(i%2?-1:1)*55,s:22}));
+  let coins=0,lives=3,inv=0,over=false,raf,last=performance.now(),tgt=null;
+  const place=()=>{do{C.x=30+Math.random()*(W-60);C.y=30+Math.random()*(H-60)}while(Math.hypot(C.x-P.x,C.y-P.y)<90)};place();
+  const kd=e=>{if(e.key.startsWith('Arrow'))e.preventDefault();keys[e.key.toLowerCase()]=true},ku=e=>{keys[e.key.toLowerCase()]=false};
+  document.addEventListener('keydown',kd);document.addEventListener('keyup',ku);
+  const pt=e=>{const r=cv.getBoundingClientRect();tgt={x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}};
+  cv.onpointerdown=e=>{pt(e);cv.setPointerCapture(e.pointerId)};
+  cv.onpointermove=e=>{if(tgt)pt(e)};cv.onpointerup=cv.onpointercancel=()=>{tgt=null};
+  cv.focus({preventScroll:true});
+  const stop=()=>{over=true;cancelAnimationFrame(raf);document.removeEventListener('keydown',kd);document.removeEventListener('keyup',ku)};
+  function loop(t){
+    const dt=Math.min((t-last)/1000,.05);last=t;
+    let dx=(keys.arrowright||keys.d?1:0)-(keys.arrowleft||keys.a?1:0),dy=(keys.arrowdown||keys.s?1:0)-(keys.arrowup||keys.w?1:0);
+    if(!dx&&!dy&&tgt){const ax=tgt.x-P.x,ay=tgt.y-P.y,d=Math.hypot(ax,ay);if(d>6){dx=ax/d;dy=ay/d}}
+    if(dx||dy){const l=Math.hypot(dx,dy);P.x+=dx/l*190*dt;P.y+=dy/l*190*dt}
+    P.x=Math.max(P.s/2,Math.min(W-P.s/2,P.x));P.y=Math.max(P.s/2,Math.min(H-P.s/2,P.y));
+    hz.forEach(h=>{h.x+=h.vx*dt;h.y+=h.vy*dt;if(h.x<h.s||h.x>W-h.s)h.vx*=-1;if(h.y<h.s||h.y>H-h.s)h.vy*=-1});
+    if(Math.hypot(C.x-P.x,C.y-P.y)<C.r+P.s/2){coins++;$('#a').textContent=coins;if(coins>=3){stop();win();return}place()}
+    inv-=dt;
+    if(inv<=0&&hz.some(h=>Math.abs(h.x-P.x)<(h.s+P.s)/2-5&&Math.abs(h.y-P.y)<(h.s+P.s)/2-5)){
+      lives--;inv=1.3;$('#b').textContent=lives;
+      if(lives<=0){stop();draw();lose('Out of lives!');return}}
+    draw();raf=requestAnimationFrame(loop);
+  }
+  function draw(){
+    x.fillStyle='#0B1F44';x.fillRect(0,0,W,H);x.strokeStyle='rgba(255,255,255,.07)';x.lineWidth=1;
+    for(let i=0;i<=W;i+=30){x.beginPath();x.moveTo(i,0);x.lineTo(i,H);x.stroke()}
+    for(let i=0;i<=H;i+=30){x.beginPath();x.moveTo(0,i);x.lineTo(W,i);x.stroke()}
+    x.fillStyle='#FF9330';x.strokeStyle='#fff';x.lineWidth=4;x.beginPath();x.arc(C.x,C.y,C.r,0,7);x.fill();x.stroke();
+    x.fillStyle='#DCEBF7';
+    hz.forEach(h=>{x.beginPath();x.moveTo(h.x,h.y-h.s);x.lineTo(h.x+h.s,h.y);x.lineTo(h.x,h.y+h.s);x.lineTo(h.x-h.s,h.y);x.closePath();x.fill()});
+    if(inv<=0||Math.floor(inv*8)%2){x.fillStyle='#F57C00';x.fillRect(P.x-P.s/2,P.y-P.s/2,P.s,P.s);x.strokeStyle='#fff';x.lineWidth=3;x.strokeRect(P.x-P.s/2,P.y-P.s/2,P.s,P.s)}
+  }
+  raf=requestAnimationFrame(loop);
+  return stop;
+},
+memory(box,win,lose){
+  const sy=['★','●','▲'],deck=[...sy,...sy].sort(()=>Math.random()-.5);
+  box.innerHTML='<p class="hudline"><span>Pairs: <b id="a">0</b>/3</span><span>Moves: <b id="b">0</b></span></p><div class="mem"></div><p class="msg" id="msg"></p>';
+  const g=box.querySelector('.mem');let open=[],pairs=0,moves=0,busy=false,tm;
+  deck.forEach(s=>{const c=document.createElement('button');c.className='card';c.setAttribute('aria-label','Hidden card');c.dataset.s=s;
+    c.onclick=()=>{if(busy||c.classList.contains('on')||c.classList.contains('done'))return;
+      c.classList.add('on');c.textContent=s;c.setAttribute('aria-label','Card '+s);open.push(c);
+      if(open.length===2){moves++;$('#b').textContent=moves;busy=true;
+        if(open[0].dataset.s===open[1].dataset.s){open.forEach(x=>{x.classList.remove('on');x.classList.add('done')});open=[];busy=false;$('#a').textContent=++pairs;if(pairs===3)tm=setTimeout(win,500)}
+        else tm=setTimeout(()=>{open.forEach(x=>{x.classList.remove('on');x.textContent='';x.setAttribute('aria-label','Hidden card')});open=[];busy=false},1200)}};
+    g.append(c)});
+  return()=>clearTimeout(tm);
+},
+reflex(box,win,lose){
+  box.innerHTML='<p class="hudline"><span>Hits: <b id="a">0</b>/2</span></p><button class="react" id="rb" type="button">Wait…</button><p class="msg" id="msg"></p>';
+  const rb=$('#rb');let hits=0,ready=false,t0=0,to,dead=false;
+  const round=()=>{ready=false;rb.className='react';rb.textContent='Wait…';to=setTimeout(()=>{ready=true;t0=performance.now();rb.className='react go';rb.textContent='Click now!'},1000+Math.random()*1800)};
+  rb.onclick=()=>{if(dead)return;
+    if(!ready){clearTimeout(to);$('#msg').textContent='Too early. Wait for orange, no penalty!';round();return}
+    const ms=performance.now()-t0;
+    if(ms>1500){$('#msg').textContent='A bit slow, try again!';round();return}
+    $('#a').textContent=++hits;if(hits>=2)win();else round()};
+  round();return()=>clearTimeout(to);
+}};
+
+document.querySelectorAll('[data-next]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector('.node[data-id="'+a.dataset.next+'"]').click()}));
+
+const vdlg=$('#vdlg'),vbox=$('#vbox');
+function openVideo(btn){
+  const d=btn.dataset,t=d.title||'Gameplay video',soon='Gameplay video coming soon';
+  $('#vt').textContent=t;vbox.textContent='';
+  if(d.mp4){
+    const m=document.createElement('video');
+    m.controls=true;m.autoplay=true;m.playsInline=true;m.setAttribute('aria-label',t);
+    if(d.poster)m.poster=d.poster;
+    m.style.cssText='position:absolute;inset:0;width:100%;height:100%;background:#0B1F44';
+    m.addEventListener('error',()=>{m.remove();vbox.textContent=soon},{once:true});
+    m.src=d.mp4;vbox.append(m);
+  }else{
+    const url=d.vimeo?'https://player.vimeo.com/video/'+encodeURIComponent(d.vimeo)+'?autoplay=1'
+      :d.yt?'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(d.yt)+'?autoplay=1':'';
+    if(url)vbox.innerHTML='<iframe src="'+url+'" title="'+t+'" allow="autoplay;encrypted-media;picture-in-picture;fullscreen" allowfullscreen></iframe>';
+    else vbox.textContent=soon;
+  }
+  vdlg.showModal();
+}
+document.querySelectorAll('[data-video]').forEach(b=>b.addEventListener('click',()=>openVideo(b)));
+$('#vclose').onclick=()=>vdlg.close();
+vdlg.addEventListener('click',e=>{if(e.target===vdlg)vdlg.close()});
+vdlg.addEventListener('close',()=>{vbox.textContent=''});
+render();
+</script>
+</body>
+</html>
